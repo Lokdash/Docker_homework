@@ -1,9 +1,9 @@
 FROM alpine:latest
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk update && apk add --no-cache maven openjdk11 git tomcat9
-WORKDIR /hello
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-WORKDIR /hello/boxfuse-sample-java-war-hello
+RUN apk update && apk add --no-cache maven tomcat9
+COPY pom.xml /usr/local/hello/pom.xml
+COPY src /usr/local/hello/src
+WORKDIR /usr/local/hello
 RUN mvn package
 WORKDIR /hello/boxfuse-sample-java-war-hello/target
 RUN mv hello-1.0.war /var/lib/tomcat9/webapps
