@@ -1,0 +1,12 @@
+services:
+    build-service:
+        image: maven:latest
+        volumes:
+            - new_volume:
+    publish-service:
+        image: tomcat:latest
+        ports:
+            - 8080:8080
+
+volumes:
+    new_volume:
