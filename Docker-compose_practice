@@ -2,11 +2,19 @@ services:
     build-service:
         image: maven:latest
         volumes:
-            - new_volume:
+            - ./boxfuse-sample-java-war-hello:/home/ubuntu
+            - source_volume: /home/ubuntu/target
+        working_dir:
+            - /home/ubuntu/
+        cmd: mvn package
+
     publish-service:
         image: tomcat:latest
+        volumes:
+            - source_volume: /var/lib/tomcat9/webapps
         ports:
-            - 8080:8080
-
+            - "8080:8080"
+        depends_on: 
+            - build-service:
 volumes:
-    new_volume:
+    source_volume:
